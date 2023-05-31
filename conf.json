@@ -1,0 +1,12 @@
+{
+    "devReplacements": [
+        {"name": "%headerBlock%", "value": "<link rel=\"stylesheet\" href=\"https:\/\/cdn.jsdelivr.net\/npm\/bootstrap@3.3.7\/dist\/css\/bootstrap.min.css\">"},
+        {"name": "%footerBlock%", "value": ""}
+    ],
+    "webServerConf": {
+        "server": {
+            "baseDir": "./dist"
+        },
+        "notify": false
+    }
+}

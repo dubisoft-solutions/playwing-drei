@@ -1,0 +1,28 @@
+.btn {
+    padding: 0;
+}
+
+.btn-success {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: $white;
+    background: $green;
+    border-radius: .625rem;
+    border: none;
+    padding: .875rem;
+    text-decoration: none;
+}
+
+.btn-link {
+    font-weight: 400;
+    font-size: .75rem;
+    color: $green;
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
