@@ -32,7 +32,6 @@ var path = {
     },
     clean: ["./dist/*", "./release/*"],
     release: {
-        
         src: "./dist/**/*",
         themeFolder: './release/tmp/theme',
         archiveSrc: './release/tmp/**/*',
@@ -60,7 +59,9 @@ const gulp = require("gulp"),
       rtlcss = require('gulp-rtlcss'),
       zip = require('gulp-zip'),
       chmod = require('gulp-chmod'),
-      gulpEach = require ( 'gulp-each' );
+      gulpEach = require('gulp-each'),
+      gulpRename = require('gulp-rename'),
+      gulpDelete = require('gulp-delete-file');
 
 /* Main tasks */
 
@@ -265,18 +266,60 @@ gulp.task("zip:tmp", function() {
         .pipe(gulp.dest(path.release.themeFolder))
 });
 
-gulp.task("zip", gulp.series('zip:tmp', function() {
+gulp.task("zip:index", gulp.series('zip:tmp', 
+    function() {
+        var regexp = /\/$|payment\.html/;
+        return gulp.src(path.release.themeFolder + '/*.html')
+            .pipe(gulpDelete({
+                reg: regexp,
+                deleteMatch: true
+            }))
+        
+    }, 
+    function() {
     return gulp
         .src(path.release.archiveSrc)
         .pipe(chmod(0o777, 0o777))
-        .pipe(zip('template.zip'))
+        .pipe(zip('drei-index-template.zip'))
+        .pipe(gulp.dest(path.release.target));
+}))
+
+gulp.task("zip:payment", gulp.series('zip:tmp', 
+    function() {
+        var regexp = /\/$|payment\.html/;
+        return gulp.src(path.release.themeFolder + '/*.html')
+            .pipe(gulpDelete({
+                reg: regexp,
+                deleteMatch: false
+            }))
+    },
+    function() {
+        return gulp.src(path.release.themeFolder + '/payment.html')
+            .pipe(gulpRename(function (path) {
+                path.basename = 'index';
+            }))
+            .pipe(gulp.dest(path.release.themeFolder));
+    },
+    function() {
+        var regexp = /\/$|payment\.html/;
+        return gulp.src(path.release.themeFolder + '/*.html')
+            .pipe(gulpDelete({
+                reg: regexp,
+                deleteMatch: true
+            }))
+    }, 
+    function() {
+    return gulp
+        .src(path.release.archiveSrc)
+        .pipe(chmod(0o777, 0o777))
+        .pipe(zip('drei-payment-template.zip'))
         .pipe(gulp.dest(path.release.target));
 }))
 
 /**
  * Creates the release archive
  */
-gulp.task("release", gulp.series("clean:build", "build", "zip"));
+gulp.task("release", gulp.series("clean:build", "build", "zip:index", "zip:payment"));
 
 /**
  * Default task
