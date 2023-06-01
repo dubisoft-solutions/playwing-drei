@@ -69,21 +69,6 @@ html {
             }
         }
     }
-    .hero {
-        .wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            .wrapper-item-left {
-                width: 230px;
-            }
-            .wrapper-item-right {
-                width: 100px;
-                display: flex;
-                text-align: start;
-            }
-        }
-    }
     .footer {
         margin-top: auto;
         .list-inline {
