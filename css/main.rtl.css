@@ -226,19 +226,6 @@ html {
     height: 1.5rem;
   }
 }
-.main .hero .wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.main .hero .wrapper .wrapper-item-left {
-  width: 230px;
-}
-.main .hero .wrapper .wrapper-item-right {
-  width: 100px;
-  display: flex;
-  text-align: start;
-}
 .main .footer {
   margin-top: auto;
 }
